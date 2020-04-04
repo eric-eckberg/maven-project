@@ -1,1 +1,1 @@
-Hello, World!
+Hello World from Maven Test Project!
