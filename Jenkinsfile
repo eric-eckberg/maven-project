@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        string( name: 'dev_path', defaultValue: '/opt/tomcat/webapps', description 'Staging Path')
-        string( name: 'prod_path', defaultValue: '/opt/tomcat-prod/webapps', description 'Staging Path')
+        string( name: 'dev_path', defaultValue: '/opt/tomcat/webapps', description: 'Staging Path')
+        string( name: 'prod_path', defaultValue: '/opt/tomcat-prod/webapps', description: 'Production Path')
     }
 
     triggers {
