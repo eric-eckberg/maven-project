@@ -26,12 +26,12 @@ pipeline {
             parallel {
                 stage ('Deploy to Staging') {
                     steps {
-                        sh "sudo cp **/target/*.war {params.dev_path}"
+                        sh "sudo cp **/target/*.war ${params.dev_path}"
                     }
                 }
                 stage ('Deploy to Production') {
                     steps {
-                        sh "sudo cp **/target/*.war {params.prod_path}"
+                        sh "sudo cp **/target/*.war ${params.prod_path}"
                     }
                 }                
             }
