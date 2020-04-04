@@ -26,7 +26,7 @@ pipeline {
             parallel {
                 stage ('Deploy to Staging') {
                     steps {
-                        sh "cp **/target/*.war ${params.dev_path}"
+                        sh "sudu -u tomcat cp **/target/*.war ${params.dev_path}"
                     }
                 }
                 stage ('Deploy to Production') {
