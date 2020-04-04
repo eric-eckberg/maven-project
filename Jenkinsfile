@@ -1,6 +1,15 @@
 pipeline {
     agent any
 
+    parameters {
+        string( name: 'dev_path', defaultValue: '/opt/tomcat/webapps', description 'Staging Path')
+        string( name: 'prod_path', defaultValue: '/opt/tomcat-prod/webapps', description 'Staging Path')
+    }
+
+    triggers {
+        pollSCS('* * * * *')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -13,27 +22,18 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Staging') {
-            steps {
-                build job: 'mavin-project-staging'
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                timeout( time: 5, unit: 'DAYS' ) {
-                    input message: 'Approve PRODUCTION Deployment?'
+        stage('Deployments') {
+            parallel {
+                stage ('Deploy to Staging') {
+                    steps {
+                        sh "sudo cp **/target/*.war {params.dev_path}"
+                    }
                 }
-                build job: 'maven-project-deploy-to-prod'
-            }
-            post {
-                success {
-                    echo 'Successfully Deployed to Production'
-                }
-
-                failure {
-                    echo 'Deployment Failed!'
-                }
+                stage ('Deploy to Production') {
+                    steps {
+                        sh "sudo cp **/target/*.war {params.prod_path}"
+                    }
+                }                
             }
         }
     }
