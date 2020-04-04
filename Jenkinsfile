@@ -9,7 +9,7 @@ pipeline {
             post {
                 success {
                     echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
+                    archiveArtifacts artifacts: '**/*.war'
                 }
             }
         }
@@ -18,7 +18,7 @@ pipeline {
                 build job: 'mavin-project-staging'
             }
         }
-        
+
         stage('Deploy to Production') {
             steps {
                 timeout( time: 5, unit: 'DAYS' ) {
