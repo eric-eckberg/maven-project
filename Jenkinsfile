@@ -24,7 +24,7 @@ pipeline {
                 timeout( time: 5, unit: 'DAYS' ) {
                     input message: 'Approve PRODUCTION Deployment?'
                 }
-                build job: 'mavin-project-deploy-to-prod'
+                build job: 'maven-project-deploy-to-prod'
             }
             post {
                 success {
